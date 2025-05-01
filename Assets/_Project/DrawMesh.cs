@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class DrawMesh : MonoBehaviour
 {
-    [SerializeField] private Transform debugVisual1;
-    [SerializeField] private Transform debugVisual2;
+    public float lineThickness = 1f;
+    public Material lineMaterial;
     private Mesh mesh;
     private Vector3 lastMousePosition;
 
@@ -47,6 +47,7 @@ public class DrawMesh : MonoBehaviour
             mesh.MarkDynamic();
 
             GetComponent<MeshFilter>().mesh = mesh;
+            GetComponent<MeshRenderer>().material = lineMaterial;
             lastMousePosition = GetMouseWorldPosition();
         }
         if (Input.GetMouseButton(0))
@@ -71,11 +72,10 @@ public class DrawMesh : MonoBehaviour
 
                 Vector3 mouseForwardVector = (GetMouseWorldPosition() - lastMousePosition).normalized;
                 Vector3 normal2D = new Vector3(0f, 0f, -1f);
-                float lineThickness = 1f;
                 Vector3 newVertexUp = GetMouseWorldPosition() + Vector3.Cross(mouseForwardVector, normal2D) * lineThickness;
                 Vector3 newVertexDown = GetMouseWorldPosition() + Vector3.Cross(mouseForwardVector, normal2D * -1f) * lineThickness;
-                debugVisual1.position = newVertexUp;
-                debugVisual2.position = newVertexDown;
+                //debugVisual1.position = newVertexUp;
+                //debugVisual2.position = newVertexDown;
 
                 vertices[vIndex2] = newVertexUp;
                 vertices[vIndex3] = newVertexDown;
