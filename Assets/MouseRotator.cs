@@ -30,6 +30,7 @@ public class MouseRotator : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.Instance.currentGameState == GameManager.GameState.Drawing) return;
         if (Input.GetKeyDown(KeyCode.F))
         {
             Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
