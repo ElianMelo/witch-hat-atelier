@@ -4,16 +4,13 @@ public class DrawMesh : MonoBehaviour
 {
     public float lineThickness = 1f;
     public Material lineMaterial;
+    public Transform player;
     private Mesh mesh;
     private Vector3 lastMousePosition;
 
-    private void Awake()
-    {
-        
-    }
-
     private void Update()
     {
+        if (GameManager.Instance.currentGameState != GameManager.GameState.Drawing) return;
         if (Input.GetMouseButtonDown(0))
         {
             // Mouse Pressed
@@ -71,7 +68,8 @@ public class DrawMesh : MonoBehaviour
                 int vIndex3 = vIndex + 3;
 
                 Vector3 mouseForwardVector = (GetMouseWorldPosition() - lastMousePosition).normalized;
-                Vector3 normal2D = new Vector3(0f, 0f, -1f);
+                // Vector3 normal2D = new Vector3(0f, 0f, -1f);
+                Vector3 normal2D = Camera.main.transform.position - player.transform.position;
                 Vector3 newVertexUp = GetMouseWorldPosition() + Vector3.Cross(mouseForwardVector, normal2D) * lineThickness;
                 Vector3 newVertexDown = GetMouseWorldPosition() + Vector3.Cross(mouseForwardVector, normal2D * -1f) * lineThickness;
                 //debugVisual1.position = newVertexUp;
