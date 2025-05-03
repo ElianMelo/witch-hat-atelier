@@ -64,6 +64,9 @@ PrefabInstance:
       addedObject: {fileID: 5010051690411205857}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3db7a33d2a3236a40a03dd2c6acbd47f, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 8266701722415402775}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3db7a33d2a3236a40a03dd2c6acbd47f, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7024304205749588208}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3db7a33d2a3236a40a03dd2c6acbd47f, type: 3}
       insertIndex: -1
@@ -129,11 +132,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  whatIsDiveGround:
-    serializedVersion: 2
-    m_Bits: 64
   maxSlopeAngle: 50
-  drillOrientation: {fileID: 0}
   orientation: {fileID: 0}
   cameraOrientation: {fileID: 0}
   slopeDetectorFront: {fileID: 0}
@@ -141,6 +140,23 @@ MonoBehaviour:
   state: 0
   dashing: 0
   diving: 0
+--- !u!114 &8266701722415402775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5507011036800949779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e782ef91e7e7834aac0f47af3aefc86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackAnimations:
+  - {fileID: 7400000, guid: ba46ecea2b903bf4296f271290821c09, type: 2}
+  - {fileID: 7400000, guid: 418c532f8cf587049af51b8f671d78e9, type: 2}
+  - {fileID: 7400000, guid: d95e3f68af81de0429aade1e71c38372, type: 2}
+  - {fileID: 7400000, guid: a4645f346b08660449b03704ca07c228, type: 2}
 --- !u!54 &7024304205749588208
 Rigidbody:
   m_ObjectHideFlags: 0

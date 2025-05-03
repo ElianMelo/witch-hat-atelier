@@ -65,6 +65,20 @@ public class PlayerMovementController : MonoBehaviour
 
     private IEnumerator SmoothlyLerpMoveSpeedCoroutine;
 
+    private bool _canMove;
+
+    public bool CanMove { 
+        get
+        {
+            return _canMove;
+        }
+        set
+        {
+            _canMove = value;
+            ResetMovement();
+        }
+    }
+
     public bool IsGrounded => grounded;
 
     public enum MovementState
@@ -108,9 +122,22 @@ public class PlayerMovementController : MonoBehaviour
         // PlayerManager.Instance.OnPlayerDeath.RemoveListener(Death);
     }
 
+    private void ResetMovement()
+    {
+        horizontalInput = 0;
+        verticalInput = 0;
+        SpeedControl();
+        StateHandler();
+        playerRb.linearVelocity = new Vector3(
+            Mathf.Clamp(playerRb.linearVelocity.x, playerRb.linearVelocity.x, 20f),
+            Mathf.Clamp(playerRb.linearVelocity.y, playerRb.linearVelocity.y, 20f),
+            Mathf.Clamp(playerRb.linearVelocity.z, playerRb.linearVelocity.z, 20f));
+    }
+
     private void Update()
     {
         if (GameManager.Instance.currentGameState != GameManager.GameState.Moving) return;
+        if (!_canMove) return;
         CheckAnimation();
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         if (grounded && !jumping)
