@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class GameManager : MonoBehaviour
     }
 
     public GameState currentGameState = GameState.Moving;
+
+    public UnityEvent OnStartPausing;
+    public UnityEvent OnStartMoving;
+    public UnityEvent OnStartDrawing;
 
     public static GameManager Instance { get; private set; }
 
@@ -34,12 +39,15 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Paused:
                 Cursor.lockState = CursorLockMode.None;
+                OnStartPausing?.Invoke();
                 break;
             case GameState.Moving:
                 Cursor.lockState = CursorLockMode.Locked;
+                OnStartMoving?.Invoke();
                 break;
             case GameState.Drawing:
                 Cursor.lockState = CursorLockMode.None;
+                OnStartDrawing?.Invoke();
                 break;
             default:
                 break;

@@ -31,10 +31,10 @@ public class MouseRotator : MonoBehaviour
     private void FixedUpdate()
     {
         if (GameManager.Instance.currentGameState == GameManager.GameState.Drawing) return;
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
-        }
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
+        //}
         _look = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * -1);
         #region Player Based Rotation
 

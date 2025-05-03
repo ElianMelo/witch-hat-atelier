@@ -1,20 +1,46 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DrawMesh : MonoBehaviour
 {
     public float lineThickness = 1f;
+    public float distanceFromTheCamera = 10f;
     public Material lineMaterial;
     public Transform player;
-    private Mesh mesh;
+    public GameObject drawedMesh;
+    private Mesh currentMesh;
+    private List<GameObject> instances = new();
+    
     private Vector3 lastMousePosition;
+
+    private void Start()
+    {
+        GameManager.Instance.OnStartDrawing.AddListener(OnStartDrawing);
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnStartDrawing.RemoveListener(OnStartDrawing);
+    }
+
+    private void OnStartDrawing()
+    {
+        foreach (var instance in instances)
+        {
+            DestroyImmediate(instance);
+        }
+        instances.Clear();
+    }
 
     private void Update()
     {
         if (GameManager.Instance.currentGameState != GameManager.GameState.Drawing) return;
         if (Input.GetMouseButtonDown(0))
         {
+            GameObject currentInstance = Instantiate(drawedMesh.gameObject, transform);
+            instances.Add(currentInstance);
             // Mouse Pressed
-            mesh = new Mesh();
+            currentMesh = new Mesh();
 
             Vector3[] vertices = new Vector3[4];
             Vector2[] uv = new Vector2[4];
@@ -38,13 +64,13 @@ public class DrawMesh : MonoBehaviour
             triangles[4] = 3;
             triangles[5] = 2;
 
-            mesh.vertices = vertices;
-            mesh.uv = uv;
-            mesh.triangles = triangles;
-            mesh.MarkDynamic();
+            currentMesh.vertices = vertices;
+            currentMesh.uv = uv;
+            currentMesh.triangles = triangles;
+            currentMesh.MarkDynamic();
 
-            GetComponent<MeshFilter>().mesh = mesh;
-            GetComponent<MeshRenderer>().material = lineMaterial;
+            currentInstance.GetComponent<MeshFilter>().mesh = currentMesh;
+            currentInstance.GetComponent<MeshRenderer>().material = lineMaterial;
             lastMousePosition = GetMouseWorldPosition();
         }
         if (Input.GetMouseButton(0))
@@ -53,13 +79,13 @@ public class DrawMesh : MonoBehaviour
             float minDistance = .1f;
             if(Vector3.Distance(GetMouseWorldPosition(), lastMousePosition) > minDistance)
             {
-                Vector3[] vertices = new Vector3[mesh.vertices.Length + 2];
-                Vector2[] uv = new Vector2[mesh.uv.Length + 2];
-                int[] triangles = new int[mesh.triangles.Length + 6];
+                Vector3[] vertices = new Vector3[currentMesh.vertices.Length + 2];
+                Vector2[] uv = new Vector2[currentMesh.uv.Length + 2];
+                int[] triangles = new int[currentMesh.triangles.Length + 6];
 
-                mesh.vertices.CopyTo(vertices, 0);
-                mesh.uv.CopyTo(uv, 0);
-                mesh.triangles.CopyTo(triangles, 0);
+                currentMesh.vertices.CopyTo(vertices, 0);
+                currentMesh.uv.CopyTo(uv, 0);
+                currentMesh.triangles.CopyTo(triangles, 0);
 
                 int vIndex = vertices.Length - 4;
                 int vIndex0 = vIndex + 0;
@@ -91,9 +117,9 @@ public class DrawMesh : MonoBehaviour
                 triangles[tIndex + 4] = vIndex2;
                 triangles[tIndex + 5] = vIndex3;
 
-                mesh.vertices = vertices;
-                mesh.uv = uv;
-                mesh.triangles = triangles;
+                currentMesh.vertices = vertices;
+                currentMesh.uv = uv;
+                currentMesh.triangles = triangles;
 
                 lastMousePosition = GetMouseWorldPosition();
             }
@@ -104,7 +130,7 @@ public class DrawMesh : MonoBehaviour
     private Vector3 GetMouseWorldPosition()
     {
         var mousePos = Input.mousePosition;
-        mousePos.z = 10; // select distance = 10 units from the camera
+        mousePos.z = distanceFromTheCamera; // select distance units from the camera
         return Camera.main.ScreenToWorldPoint(mousePos);
     }
 }

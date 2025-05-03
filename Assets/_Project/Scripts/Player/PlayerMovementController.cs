@@ -110,6 +110,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.currentGameState != GameManager.GameState.Moving) return;
         CheckAnimation();
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         if (grounded && !jumping)
@@ -138,6 +139,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.Instance.currentGameState != GameManager.GameState.Moving) return;
         if (dashing) return;
         if (diving) return;
         Move();
