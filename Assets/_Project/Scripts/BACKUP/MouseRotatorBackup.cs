@@ -20,7 +20,6 @@ public class MouseRotatorBackup : MonoBehaviour
     public float rotationLerp = 0.5f;
 
     public float speed = 1f;
-    public Camera camera;
     // public Transform playerTransform;
 
     private void Start()

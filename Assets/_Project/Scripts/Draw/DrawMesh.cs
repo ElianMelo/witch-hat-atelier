@@ -8,6 +8,7 @@ public class DrawMesh : MonoBehaviour
     public Material lineMaterial;
     public Transform player;
     public GameObject drawedMesh;
+    public LayerMask drawLayerMask;
     private Mesh currentMesh;
     private List<GameObject> instances = new();
     
@@ -71,6 +72,7 @@ public class DrawMesh : MonoBehaviour
 
             currentInstance.GetComponent<MeshFilter>().mesh = currentMesh;
             currentInstance.GetComponent<MeshRenderer>().material = lineMaterial;
+            currentInstance.GetComponent<MeshCollider>().sharedMesh = currentMesh;
             lastMousePosition = GetMouseWorldPosition();
         }
         if (Input.GetMouseButton(0))
@@ -122,6 +124,17 @@ public class DrawMesh : MonoBehaviour
                 currentMesh.triangles = triangles;
 
                 lastMousePosition = GetMouseWorldPosition();
+            }
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            RaycastHit[] hits = Physics.SphereCastAll(GetMouseWorldPosition(), 4f, Vector3.forward, 10f, drawLayerMask);
+            if (hits.Length > 0)
+            {
+                foreach (var hit in hits)
+                {
+                    DestroyImmediate(hit.collider.gameObject);
+                }
             }
         }
         //transform.position = GetMouseWorldPosition();

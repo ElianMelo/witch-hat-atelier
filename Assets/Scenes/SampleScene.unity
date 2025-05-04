@@ -361,6 +361,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AOE_Explosion_Water
       objectReference: {fileID: 0}
+    - target: {fileID: 9077682241068869429, guid: fe2e4d08899945f42b71c9c11aa275a5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9077682241068869450, guid: fe2e4d08899945f42b71c9c11aa275a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.6891533
@@ -1296,6 +1300,9 @@ MonoBehaviour:
   lineMaterial: {fileID: 2100000, guid: be1ed72b1f244ee45b0457f1d7385c57, type: 2}
   player: {fileID: 7730149074459179008}
   drawedMesh: {fileID: 149453866333172690, guid: 3e12683ac561e6343afc7066ab3480a6, type: 3}
+  drawLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1704787746
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,7 +1424,6 @@ MonoBehaviour:
   rotationPower: 3
   rotationLerp: 0.5
   speed: 1
-  camera: {fileID: 330585545}
 --- !u!1 &1947670318
 GameObject:
   m_ObjectHideFlags: 0

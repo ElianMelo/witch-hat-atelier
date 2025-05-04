@@ -157,6 +157,7 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 418c532f8cf587049af51b8f671d78e9, type: 2}
   - {fileID: 7400000, guid: d95e3f68af81de0429aade1e71c38372, type: 2}
   - {fileID: 7400000, guid: a4645f346b08660449b03704ca07c228, type: 2}
+  spellPrefab: {fileID: 9077682241068869429, guid: fe2e4d08899945f42b71c9c11aa275a5, type: 3}
 --- !u!54 &7024304205749588208
 Rigidbody:
   m_ObjectHideFlags: 0

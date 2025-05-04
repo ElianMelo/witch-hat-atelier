@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpellCastController : MonoBehaviour
 {
     public List<AnimationClip> attackAnimations = new();
+    public GameObject spellPrefab;
 
     private Animator playerAnimator;
     private PlayerMovementController playerMovementController;
@@ -31,6 +32,8 @@ public class SpellCastController : MonoBehaviour
             if (waitAnimationCoroutine != null) StopCoroutine(waitAnimationCoroutine);
             waitAnimationCoroutine = WaitAnimation((time/2));
             StartCoroutine(waitAnimationCoroutine);
+            GameObject spellInstance = Instantiate(spellPrefab, transform.position, Quaternion.identity);
+            spellInstance.transform.position = transform.position + transform.forward * 2;
         }
     }
 
